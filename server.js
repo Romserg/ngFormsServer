@@ -21,14 +21,13 @@ function processForm(req, res) {
       'content-type': 'text/plain'
     });
 
-    res.end(util.inspect({
+    let data = JSON.stringify({
       fields: fields
-    }));
+    });
+    res.end(data);
 
     console.log('posted fields:\n');
-    console.log(util.inspect({
-      fields: fields
-    }));
+    console.log(data)
   });
 }
 
