@@ -6,16 +6,34 @@ const server = http.createServer(function (req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type', 'Access-Control-Request-Method', 'Access-Control-Request-Headers');
 
-  if(req.method.toLowerCase() == 'post') {
+  if(req.method.toLowerCase() === 'post') {
     processForm(req, res);
     return;
+  }
+
+  if(req.method.toLowerCase() === 'get') {
+    let data = {
+      data: {
+        languages: [
+          'English',
+          'Spanish',
+          'German',
+          'Other'
+        ]
+      }
+    };
+
+    let responseData = JSON.stringify(data);
+    res.end(responseData);
+    console.log('get: ', responseData);
+    return
   }
 
   res.end();
 });
 
 function processForm(req, res) {
-  var form = new formidable.IncomingForm();
+  let form = new formidable.IncomingForm();
   form.parse(req, function (err, fields) {
     res.writeHead(200, {
       'content-type': 'text/plain'
